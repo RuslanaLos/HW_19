@@ -1,0 +1,11 @@
+#main{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+#main > div {
+    flex-basis: 25%;
+    border: 1px black solid;
+    min-height: 200px;
+}
