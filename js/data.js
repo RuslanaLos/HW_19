@@ -69,3 +69,8 @@ const categories = {
         ],
     }
 }
+
+const paymentMethods = {
+    cash: 'Післяплата',
+    bank: 'Картка',
+}

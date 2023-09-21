@@ -14,7 +14,38 @@
     <div id="products"></div>
     <div id="product_info"></div>
 </div>
+<div id="order_form">
+    <h4 id="formName">Form for ordering </h4>
+    <form id="orderingForm">
+        <label for="fullName">ПІБ покупця:</label>
+        <input type="text" id="fullName" name="fullName"><br>
+
+        <label for="city">Місто:</label>
+        <select id="city" name="city">
+            <option value="kv">Київ</option>
+            <option value="lv">Львів</option>
+            <option value="od">Одеса</option>
+            <option value="dn">Дніпро</option>
+        </select><br>
+
+        <label for="novaPoshta">Склад Нової пошти:</label>
+        <input type="text" id="novaPoshta" name="novaPoshta"><br>
+
+        <label>Післяплата або оплата банківською карткою:</label>
+        <p><input type="radio" name="paymentMethod" value="cash" checked> Післяплата </p>
+        <p><input type="radio" name="paymentMethod" value="bank"> Картка </p>
+
+        <label for="quantity">Кількість продукції:</label>
+        <input type="text" id="quantity" name="quantity"><br>
+
+        <label for="comment">Коментар до замовлення:</label>
+        <textarea id="comment" name="comment"></textarea><br>
+
+        <button type="button" id="btn">Замовити</button>
+    </form>
+</div>
 <script src="js/data.js"></script>
+<script src="js/functions.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

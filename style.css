@@ -2,10 +2,40 @@
     display: flex;
     gap: 20px;
     justify-content: center;
+    margin-bottom: 40px;
 }
 
 #main > div {
     flex-basis: 25%;
     border: 1px black solid;
     min-height: 200px;
+}
+input, select {
+    margin: 10px 0px;
+}
+button{
+    margin: 10px 0px;
+}
+#order_form {
+    margin: auto;
+    max-width: 400px;
+    display: none;
+    border: black solid 1px;
+    padding-left: 10px;
+}
+
+p {
+    margin: 10px 0px;
+}
+.show{
+    display: block!important;
+}
+.red_border{
+    border: red 1px solid;
+    width: 141px;
+    height: 17.5px;
+    border-radius: 3px;
+}
+.hidden {
+    display: none;
 }
