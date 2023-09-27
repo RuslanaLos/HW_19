@@ -52,13 +52,13 @@ function showElement(element) {
 function validateData(usersData) {
     let allIsValid = true;
     for (let field in usersData) {
-        if (field === 'ПІБ' && usersData[field] === '') {
+        if (field === 'fullName' && usersData[field].value === '') {
             document.getElementById('fullName').classList.add('red_border');
             allIsValid = false;
-        } else if (field === 'Склад Нової пошти' && (usersData[field] === '' || isNaN(usersData[field]))) {
+        } else if (field === 'novaPoshta' && (usersData[field].value === '' || isNaN(usersData[field].value))) {
             document.getElementById('novaPoshta').classList.add('red_border');
             allIsValid = false;
-        } else if (field === 'Кількість продукції' && (usersData[field] === '' || isNaN(usersData[field]))) {
+        } else if (field === 'quantity' && (usersData[field].value === '' || isNaN(usersData[field].value))) {
             document.getElementById('quantity').classList.add('red_border');
             allIsValid = false;
         }
@@ -74,7 +74,7 @@ function showEnteredData(data) {
     parent.appendChild(userDataDiv);
     for (let key in data) {
         let infoParagraph = document.createElement('p');
-        infoParagraph.textContent = `${key}: ${data[key]}`;
+        infoParagraph.textContent = `${data[key].label}: ${data[key].value}`;
         userDataDiv.appendChild(infoParagraph);
     }
 }

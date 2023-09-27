@@ -23,12 +23,36 @@ document.getElementById('btn').addEventListener('click', (event) => {
     event.preventDefault();
     const paymentKey = formElement.paymentMethod.value;
     const formData = {
-        'ПІБ': formElement.fullName.value,
+        fullName: {
+            value: formElement.fullName.value,
+            label: 'ПІБ',
+        },
+        city: {
+            value: formElement.city.options[formElement.city.selectedIndex].textContent,
+            label: 'Місто',
+        },
+        novaPoshta: {
+            value: formElement.novaPoshta.value,
+            label: 'Склад Нової пошти',
+        },
+        paymentMethods: {
+            value: paymentMethods[paymentKey],
+            label: 'Тип оплати',
+        },
+        quantity: {
+            value: formElement.quantity.value,
+            label: 'Кількість продукції',
+        },
+        comment: {
+            value: formElement.comment.value,
+            label: 'Коментар до замовлення',
+        },
+        /*'ПІБ': formElement.fullName.value,
         'Місто': formElement.city.options[formElement.city.selectedIndex].textContent,
         'Склад Нової пошти': formElement.novaPoshta.value,
         'Тип оплати': paymentMethods[paymentKey],
         'Кількість продукції': formElement.quantity.value,
-        'Коментар до замовлення': formElement.comment.value,
+        'Коментар до замовлення': formElement.comment.value,*/
     }
     const allIsValid = validateData(formData);
     if (allIsValid) {
