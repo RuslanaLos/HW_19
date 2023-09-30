@@ -132,27 +132,18 @@ function showUserOrders (orders) {
                 if (userData === 'date' || userData === 'price') {
                     const dataObj  = (order[userData]);
                     const orderData = document.createElement('p');
-                    orderData.setAttribute('order-index', `${index}`);
+                    orderData.setAttribute('order-index', `${index}`)
                     orderData.innerHTML += `${dataObj.label}: ${dataObj.value}`;
                     userOrder.appendChild(orderData);
                     userOrders.appendChild(userOrder);
                 }
             }
-            const viewDetails = document.createElement('input');
-            viewDetails.type = 'button';
-            viewDetails.value = 'Деталі замовлення';
-            viewDetails.setAttribute('order-index', `${index}`);
-            userOrder.appendChild(viewDetails);
-            viewDetails.addEventListener('click',  (event) => {
-                if (document.getElementById('orderDetails') !== null) {
-                    removeElement(document.getElementById('orderDetails'));
-                }
-                if (event.target.nodeName === 'INPUT') {
+            userOrder.addEventListener('click',  (event) => {
+                if (event.target.nodeName === 'P') {
                     const orderIndex = event.target.getAttribute('order-index');
                     console.log(orderIndex);
-                    const orderDetails = document.createElement('div');
-                    orderDetails.id = 'orderDetails';
-                    userOrders.appendChild(orderDetails);
+                    const orderDetails = document.getElementById(orderIndex);
+                    orderDetails.innerHTML = '';
                     console.log(orderDetails);
                     const checkedOrder = orders[orderIndex];
                     for (let userData in checkedOrder) {
@@ -161,7 +152,7 @@ function showUserOrders (orders) {
                         const orderData = document.createElement('p');
                         orderData.innerHTML += `${dataObj.label}: ${dataObj.value}`;
                         orderDetails.appendChild(orderData);
-
+                        userOrders.appendChild(orderDetails);
 
 
                     }
@@ -321,13 +312,7 @@ function showOrderDetails(order, orderItem, index) {
 
 })*/
 
-function removeElement(element) {
-    if (typeof element === 'string') {
-        document.querySelector(element).remove();
-    } else {
-        element.remove();
-    }
-}
+
 
 
 
