@@ -10,11 +10,14 @@
     border: 1px black solid;
     min-height: 200px;
 }
+#orders{
+    padding: 0 10px;
+}
 input, select {
-    margin: 10px 0px;
+    margin: 10px 0;
 }
 button{
-    margin: 10px 0px;
+    margin: 10px 0;
 }
 #order_form {
     margin: auto;
@@ -25,7 +28,7 @@ button{
 }
 
 p {
-    margin: 10px 0px;
+    margin: 10px 0;
 }
 .show{
     display: block!important;
@@ -38,4 +41,11 @@ p {
 }
 .hidden {
     display: none;
+}
+
+#btnBackToOrder input{
+    margin: 0;
+}
+#userOrders button {
+    margin-left: 20px;
 }
