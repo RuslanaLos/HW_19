@@ -8,15 +8,7 @@ function showCategories() {
         element.setAttribute('data-category', categoryKey);
         parentElement.appendChild(element);
     }
-    /*myOrders(parentElement);*/
 }
-
-/*function myOrders(categoriesElement) {
-    const ordersBtn = document.createElement('button');
-    categoriesElement.appendChild(ordersBtn);
-    ordersBtn.textContent = 'My orders';
-    ordersBtn.id = 'ordersBtn';
-}*/
 
 function showProducts(products, category) {
     const parentElement = document.getElementById('products');
@@ -52,9 +44,7 @@ function buyProduct(name, price) {
     buyButton.addEventListener('click', () => {
         document.getElementById("orderingForm").reset();
         const formContainer = document.getElementById('order_form');
-        /*const userData =*/
         showElement(formContainer);
-        /*resetProductsAndInfo();*/
     });
 }
 
@@ -78,50 +68,108 @@ function validateData(usersData) {
     }
     return allIsValid;
 }
-
-function showEnteredData(data) {
-    document.forms.orderingForm.classList.add('hidden');
-    document.getElementById('formName').classList.add('hidden');
-    const parent = document.getElementById('order_form');
-    const userDataDiv = document.createElement('div');
-    /*closeEnteredData(userDataDiv);*/
-    parent.appendChild(userDataDiv);
-    for (let key in data) {
-        let infoParagraph = document.createElement('p');
-        infoParagraph.textContent = `${data[key].label}: ${data[key].value}`;
-        userDataDiv.appendChild(infoParagraph);
-    }
-    /*saveEnteredData(data);*/
+function hideForm() {
+    const orderingForm = document.getElementById('order_form');
+    orderingForm.classList.remove('show');
 }
 
-/*function saveEnteredData(data) {
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    orders.push(data);
-    localStorage.setItem('orders', JSON.stringify(orders));
-}*/
+function sumOrderPrice(quantity) {
+    return quantity * currentPrice;
+}
 
-/*function closeEnteredData(dataDiv) {
-    const closeBtn = document.createElement('input');
-    closeBtn.type = 'button';
-    closeBtn.value = 'Close';
-    dataDiv.appendChild(closeBtn);
-    closeBtn.addEventListener('click', () => {
-        cleanElement('#order_form');
+function showOnlyOrders() {
+    const categories = (document.querySelectorAll('#categories #category'));
+    categories.forEach((element) => element.classList.add('hidden'));
+    const products = (document.querySelectorAll('#products #product'));
+    products.forEach((element) => element.classList.add('hidden'));
+    const product_info = (document.querySelectorAll('#product_info #productsInfo'));
+    product_info.forEach((element) => element.classList.add('hidden'));
+    if (document.getElementById('buyButton') !== null) {
+        document.getElementById('buyButton').classList.add('hidden');
+    }
+    hideForm();
+}
+
+function saveEnteredData(formData, orders) {
+    orders.push(formData);
+    localStorage.setItem('orders', JSON.stringify(orders));
+}
+
+function showUserOrders (storedOrders) {
+    const parentElement = document.getElementById('orders');
+    const userOrders = document.createElement('div');
+    userOrders.id = 'userOrders';
+    parentElement.appendChild(userOrders);
+    if (storedOrders.length === 0) {
+        showEmptyOrders(parentElement, userOrders);
+    } else {
+        storedOrders.forEach((order, index) => {
+            const userOrder = document.createElement('div'); //date and sum div
+            userOrder.id = index; // id equals obj[i]
+            userOrder.classList.add('userOrder');
+            showBasicInfo(order, userOrder, index, userOrders);
+            userOrder.addEventListener('click', (event) => {
+                if (event.target.nodeName === 'P') {
+                    showFullOrderInfo(event, index);
+                }
+            });
+        })
+    }
+}
+
+function showFullOrderInfo (event, index) {
+    const orderIndex = event.target.getAttribute('order-index');// индекс заказа на который нажали
+    const userOrder = document.getElementById(orderIndex); // date and sum div
+    userOrder.innerHTML = ''; // очищаем date and sum div
+    const checkedOrder = storedOrders[orderIndex]; // obj with users data
+    for (let field in checkedOrder) { //userData -fullName i td
+        const fieldValue = checkedOrder[field] // obj wit label and value
+        const orderData = document.createElement('p');
+        orderData.innerHTML += `${fieldValue.label}: ${fieldValue.value}`;
+        userOrder.appendChild(orderData);
+    }
+    addDeleteOrderBtn(userOrder, index);
+}
+
+function addDeleteOrderBtn(userOrder, index) {
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Видалити замовлення';
+    deleteBtn.setAttribute('order-index', `${index}`);
+    userOrder.appendChild(deleteBtn);
+    deleteBtn.addEventListener('click', () => {
+        deleteOrder(deleteBtn, userOrder);
     })
 }
-
-function cleanElement(element) {
-    if (typeof element === 'string') {
-        document.querySelector(element).innerHTML = '';
-    } else {
-        element.innerHTML = '';
+function showBasicInfo(order, userOrder, index, userOrders) {
+    for (let field in order) { //field -fullName i td, order - obj with users data
+        if (field === 'date' || field === 'price') {
+            const fieldValue = (order[field]); // obj wit label and value
+            const orderData = document.createElement('p'); //Дата створення замовлення: 30.09.2023, 14:22:55, Сума замовлення: 4900
+            orderData.setAttribute('order-index', `${index}`)// attribute for p
+            orderData.innerHTML += `${fieldValue.label}: ${fieldValue.value}`;// text in p
+            userOrder.appendChild(orderData); //date and sum div
+            userOrders.appendChild(userOrder); //div with divs with date and sums
+        }
     }
-}*/
+}
+function showEmptyOrders(parentElement, userOrders) {
+    userOrders.textContent = 'У вас немає збережених замовлень.';
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'Close';
+    userOrders.appendChild(closeBtn);
+    closeBtn.addEventListener('click', (event) => {
+        if (event.target.nodeName === 'BUTTON') {
+            parentElement.removeChild(userOrders);
+        }
+    })
+}
+function deleteOrder (deleteBtn, userOrder) {
+    const orderToDelete = deleteBtn.getAttribute('order-index');
+    storedOrders.splice(orderToDelete, 1);
+    localStorage.setItem('orders', JSON.stringify(storedOrders));
+    userOrder.remove();
+    const orders = document.getElementById('userOrders');
+    orders.remove();
+    showUserOrders(storedOrders);
+}
 
-/*function resetProductsAndInfo() {
-    const productsElement = document.getElementById('products');
-    productsElement.innerHTML = '';
-
-    const productInfoElement = document.getElementById('product_info');
-    productInfoElement.innerHTML = '';
-}*/

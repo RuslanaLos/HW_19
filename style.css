@@ -47,5 +47,16 @@ p {
     margin: 0;
 }
 #userOrders button {
-    margin-left: 20px;
+    margin-left: 0;
+
+}
+
+#userOrders div{
+    width: 350px;
+    border: black 1px solid;
+    margin: 10px 0;
+    padding: 10px;
+}
+#userOrder button {
+    margin-left: 10px;
 }
